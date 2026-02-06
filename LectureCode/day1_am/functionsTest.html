@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Function Tests</title>
+  </head>
+  <body>
+    <script>
+      /** @param {Boolean} expression*/
+      function report(expression) {
+        document.writeln(String(expression));
+      }
+
+      report(1 === 1);
+
+      function fun1() {
+        return 1;
+      }
+
+      report(fun1() === 1);
+      report(fun1(42) === 1);
+
+      function fun2() {
+        return 1;
+      }
+      function fun2(arg) {
+        return arg;
+      }
+      report(fun2() !== 1); // should be false if function keyword not used
+
+      report(fun2() === undefined); // true
+
+      function noReturn() {
+        // undefined return
+        1;
+      }
+
+      const noReturn2 = () => {
+        // undefined return
+        1;
+      };
+
+      const noReturn3 = () => 1; // can't be overwritten with this syntax, defined return
+
+      const noReturnDefArg = (argo = 0) => argo;
+
+      report(noReturn() !== 1);
+      report(noReturn2() !== 1);
+      report(noReturn3() === 1);
+      report(noReturnDefArg(1) === 1);
+      report(noReturnDefArg() === 0);
+
+      const myfun = fun1;
+
+      const funs = [null, undefined, fun1, fun2];
+
+      report(myfun() == 1);
+      report(funs[2]() === 1);
+
+      // this is the same as the function line below => currying
+      function doit(whatToDo) {
+        return function bla(arg) {
+          return whatToDo(arg);
+        };
+      }
+
+      const doit2 = (whatToDo) => (arg) => whatToDo(arg);
+
+      report(doit(fun1)(10) === 1);
+      report(doit(fun2)(10) === 10);
+      report(doit2(fun1)(10) === 1);
+
+      const doFun2 = doit2(fun1);
+
+      report(doFun2(10) === 1);
+      report(doFun2() === 1);
+    </script>
+  </body>
+</html>

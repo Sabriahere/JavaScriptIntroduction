@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>All Tests</title>
+  </head>
+  <body>
+    <script>
+      ["function", "lambda"].forEach((name) => {
+        document.writeln(`<script src="${name}/${name}.js"><` + `/script>`);
+        document.writeln(`<script src="${name}/${name}Test.js"><` + `/script>`);
+      });
+    </script>
+
+    <!-- rewrote this line to be dynamically loaded-->
+    <!--script src="lambda/lambda.js"></script>
+    <script src="lambda/lambdaTest.js"></script-->
+  </body>
+</html>

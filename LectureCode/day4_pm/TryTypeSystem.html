@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * @typedef CoolType
+       * @property { () => String } cool
+       */
+
+      /**
+       * @typedef PersonType
+       * @property { "41" , "0", "Roger" } fn - first name
+       * @property { Boolean } tennis - if the person plays tenni
+       */
+
+      //like an interface usable
+      /** @type { PersonType & CoolType }
+       */
+      const person = { fn: "Roger", tennis: true, cool: () => "webPr" };
+      /**
+       * //@type { <T> (arg:T) => T }
+       * @example
+       *    foo(42) === 42
+       *    foo("41") === 411
+       *    foo(true) === 2
+       * @template T
+       * @param { PersonType & CoolType } arg
+       * @return { <T> }
+       */
+      const foo = (arg) => {
+        return console.log(arg);
+      };
+
+      foo(person);
+
+      const Person = (fn, tennis) => {
+        return { fn, tennis };
+      };
+
+      /*
+      document.writeln(String(foo(41)));
+      document.writeln(foo("41"));
+      document.writeln(String(foo(true)));
+      */
+    </script>
+  </body>
+</html>

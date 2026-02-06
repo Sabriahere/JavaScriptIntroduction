@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quiz</title>
+  </head>
+  <body>
+    <script>
+      /*
+            const factor_ = 0.2;
+            const bonusCalculation = (e) => (e.bonus = e.revenue * factor_);
+
+            const e = { revenue: 10000, bonus: null };
+            bonusCalculation(e);
+            document.writeln(e.bonus === e.revenue * factor_);
+            */
+
+      //TODO: try in quiz
+
+      const factor_ = 0.2;
+
+      /*
+      const calculation = Function(
+        "employee",
+        "factor_",
+        "return (" + bonusFormula + ");",
+      );
+      const bonusCalculation = (employee) =>
+        (employee.bonus = calculation(employee, factor_));
+        */
+
+      const userInput = document.getElementById("bonusFormula");
+      const bonusCalculation = (e) => Function("e", "return " + e);
+
+      const e = { revenue: 10000, bonus: null };
+      bonusCalculation(e);
+      document.writeln(e.bonus === e.revenue * factor_);
+
+      /*
+            const Person = (name) => {
+              let age = 0;
+              return {
+                getAge: () => age,
+                setAge: (newAge) => (age = newAge),
+                getName: () => name,
+                setName: (newName) => (name = newName),
+              };
+            };
+
+            const me = Person("Myself");
+            me.setAge(50);
+            me.setName("Test");
+            document.writeln(me.getName() === "Test");
+            //document.writeln(me.getAge() === 50);
+
+            const you = Person("Myself");
+            you.age = 50;
+            you.name = "Test";
+            document.writeln(you.getName() === "Test");
+            //document.writeln(you.getAge() === 50);
+            */
+
+      /*
+      const Empty = (() => {
+        function Empty() {}
+        return Empty;
+      })();
+      const empty = new Empty();
+      const also = new Empty();
+      document.writeln(empty instanceof Empty);
+      Empty.prototype.answer = 42;
+      document.writeln(empty.answer);
+      document.writeln(also.answer);
+      */
+
+      /*
+      function Empty() {}
+
+      const empty = new Empty();
+      Empty.prototype.answer = 42;
+      document.writeln(empty.answer);
+      */
+    </script>
+  </body>
+</html>

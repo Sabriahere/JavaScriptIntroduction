@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Try Kolibri Production Bundle</title>
+  </head>
+  <body>
+    <h1>Try Kolibri Production Bundle</h1>
+    <p>
+      Test the fibonacci sequence with random numbers 1..10, reload for next
+      test
+    </p>
+    <pre id="out">waiting ... </pre>
+
+    <script src="https://webengineering-fhnw.github.io/Kolibri/production/kolibri-0.9.11.js"></script>
+    <script>
+      //out.textContent += (10).times((n) => n ** 3).sum();
+      /*
+                  out.textContent += Walk(2, 8, 2).show();
+                  out.textContent += Walk(100, 0, -7).show(); // start and end is set by the highest and lowest number
+                  out.textContent += Walk(100, 0).show(); //standard step is 1
+                  out.textContent += Walk(10).show(); // standard is 0
+                  out.textContent += "\n";
+                  */
+
+      /*
+                  const fibSeq = Sequence(Pair(1)(1), forever, ([a, b]) =>
+                    Pair(b)(a + b),
+                  ).map(([a, _b]) => a); // like an iterator
+                  */
+
+      // abstraction: it's harder to read the code in this case though
+      const scan = (first, second, combineFn) =>
+        Sequence(Pair(first)(second), forever, ([a, b]) =>
+          Pair(b)(combineFn(a, b)),
+        ).map(([a, _b]) => a); // like an iterator
+
+      /**
+       * Gets the nth fibonacci number
+       * @param {Number} n - must be at least 1 or greater
+       * @return {*}
+       */
+      const fib = (n) =>
+        scan(1, 2, plusOp) // plusOp = (a,b) => a + b
+          .drop(n - 1)
+          .head();
+      /*
+                  out.textContent += "\n";
+                  out.textContent += fibSeq.show();
+              */
+
+      out.textContent += "\n";
+      const testFibAssertion = (n) =>
+        fib(n) + fib(n + 1) === fib(n + 2)
+          ? `fib assertion passed for n=${n}`
+          : `fib assertion FAILED for n=${n}`;
+
+      const n = (Math.random() * 10 + 1) | 0;
+      out.textContent += testFibAssertion(n);
+
+      /*
+                  // 1,1,2,3,5,8,13,21,...
+                  const fibs = Seq(1, 1, 2, 3, 5, 8, 13, 21);
+
+                  // try drop, take, head
+                  //out.textContent += fibs.drop(5).take(5).head();
+
+                  const pairFibs = Seq(
+                    [1, 1],
+                    [1, 1 + 1],
+                    [2, 1 + 2],
+                    [3, 2 + 3],
+                    [5, 3 + 5],
+                    [8, 5 + 8],
+                    [13, 8 + 13],
+                  );
+                  out.textContent += "\n";
+                  out.textContent += pairFibs.map((p) => p[0]);
+
+                  out.textContent += "\n";
+                  out.textContent += fib(3);
+
+                  out.textContent += "\n";
+                  out.textContent += fib(3) + fib(4) === fib(5);
+                  */
+
+      /*
+      const String$ = reduce$(plusOp, "");
+      const chars = (c) => (n) =>String$(map((_number) => c)(Sequence(0,(i) => i < n,(i) => i + 1,),),);
+      const stars = map((n) => chars("*")(1 + 2 * n))(Sequence(0, forever, (n) => n + 1),);
+      const blanks = (n) =>map((i) => chars(" ")(n - i))(Sequence(1,(i) => i <= n,(i) => i + 1,),);
+      const tree = (n) => map(([a, b]) => a + b + a)(zip(blanks(n))(stars));
+
+      document.writeln(stars.take(6).show());
+      document.writeln("start" + blanks(5) + "end");
+      document.writeln(chars("c")(5));
+      document.writeln(tree(5).show());
+      /*
+            document.writeln(Walk(1, 10, 1).show());
+            document.writeln(
+              Sequence(1, forever, (n) => n + 1)
+                .take(10)
+                .show(),
+            );
+            document.writeln("start" + chars("c", 5) + "end");
+            */
+
+      tree(1).show();
+      document.writeln(tree(3)["=="](Seq("  *  ", " *** ", "*****")));
+
+      const n_ = (Math.random() * 100) | 0;
+      const t_ = tree(n_);
+      const matches = (str, n) => {
+        const m = str.match(/^( *)?(\**)( *)?$/);
+        return m[2].length === 1 + 2 * (n - 1);
+      };
+      document.writeln(
+        t_.count$() === n_ &&
+          t_.reduce$(
+            ([n, b], cur) => Pair(n + 1)(b && matches(cur, n)),
+            Pair(1)(true),
+          )(snd),
+      );
+    </script>
+
+    <!-- <pre>
+        You can use your browser's console to try Kolibri for yourself.
+        Here are some ideas of what you can do:
+
+        Walk(3)  ['==']  ( Seq(0,1,2,3) );
+
+
+        const odds = Walk(1,ALL,2);
+        odds.show();
+
+        const partialSums = seq => Walk(1,ALL).map( n => seq.take(n).foldl$(plusOp, 0));
+
+        const triagonalNumbers = partialSums(Walk()).show();
+        const surprise         = partialSums(odds).show();
+
+        const fib = ???
+
+        const ratios = Walk().map(n=> fib(n+1)/fib(n));
+        ratios.show();
+        const golden = limit(0.0001, ratios);
+
+        Walk(2,8,2).show(); shows [2,4,6,8]
+
+    </pre> -->
+  </body>
+</html>

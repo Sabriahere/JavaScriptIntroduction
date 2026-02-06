@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <div id="out"></div>
+
+    <script>
+      /**
+       * @typedef TodoType
+       * @property { String } title
+       */
+      // Example
+      // 'https://jsonplaceholder.typicode.com/todos/1'
+      document.body.style.backgroundColor = "black";
+      const res = fetch("https://jsonplaceholder.typicode.com/todos/1");
+      //debugger
+      const xxx = res.then((resp) => resp.json());
+      const yyy = xxx.then(
+        /** @type { TodoType } */ (todo) => (out.textContent = todo.title),
+      ); // value that doesnt return a promise, if this is input for something else then the value is returned into a promise
+      const zzz = yyy.catch((err) => console.error(err));
+      const uuu = zzz.finally(() => {
+        out.textContent += " fertig";
+        document.body.style.backgroundColor = "revert";
+      });
+
+      console.dir(res);
+      console.dir(xxx);
+      console.dir(yyy);
+
+      // this is the same as above
+      const foo = async () => {
+        const resp = await fetch(
+          "https://jsonplaceholder.typicode.com/todos/1",
+        );
+        const todo = await resp.json();
+        todo.textContent = todo.title;
+      };
+
+      //foo();
+
+      // this is the same as above
+      const foo2 = async () => {
+        try {
+          const resp = await fetch(
+            "https://jsonplaceholder.typicode.com/todos/1",
+          );
+          const todo = await resp.json();
+          todo.textContent = todo.title;
+        } catch (e) {
+          console.error(e);
+        } finally {
+          // not correct stack case though
+          document.body.style.backgroundColor = "revert";
+        }
+      };
+
+      foo2();
+    </script>
+  </body>
+</html>

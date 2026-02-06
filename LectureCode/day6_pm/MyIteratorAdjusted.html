@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>MyIterator</title>
+  </head>
+  <body>
+    <script>
+      const inc = (it) => it + 1;
+      const forever = (it) => true;
+      const repeat = (startVal, whileFn = forever, incFunc = inc) => ({
+        [Symbol.iterator]: () => ({
+          next: () => ({
+            value: (startVal = incFunc(startVal)),
+            done: !whileFn(startVal),
+          }),
+        }),
+      });
+
+      for (const num of repeat(1)) {
+        document.writeln(num + "<br>");
+      }
+
+      const [first, second] = repeat(2);
+      // the rest of the list is not executed,
+      // it's not an infinite list but only two -> no longer data structure but control structure
+      document.writeln("first: " + first + "<br>");
+      document.writeln("second: " + second + "<br>");
+    </script>
+  </body>
+</html>
